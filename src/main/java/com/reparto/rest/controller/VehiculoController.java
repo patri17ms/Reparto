@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reparto.rest.model.HcoUbicacionVehiculoDTO;
 import com.reparto.rest.model.VehiculoDTO;
 import com.reparto.rest.model.VehiculoNuevo;
 import com.reparto.rest.model.VehiculoUbicacion;
@@ -45,7 +46,12 @@ public class VehiculoController {
     
     @PutMapping("/actualizarUbicacion")
     public ResponseEntity<VehiculoUbicacion> actualizarUbicacion(@RequestBody @Valid VehiculoUbicacion vehiculoUbicacion) {
-        return new ResponseEntity<>(vehiculoService.insertarUbicacion(vehiculoUbicacion), HttpStatus.OK);
+        return new ResponseEntity<>(vehiculoService.actualizarUbicacion(vehiculoUbicacion), HttpStatus.OK);
+    }
+    
+    @GetMapping("/obtenerHistorialUbicacion")
+    public ResponseEntity<List<HcoUbicacionVehiculoDTO>> obtenerHistorialUbicacion(@RequestParam(value = "numeroVehiculo") Integer numeroVehiculo){
+        return new ResponseEntity<>(vehiculoService.obtenerHistorialUbicacion(numeroVehiculo), HttpStatus.OK);
     }
 }
 

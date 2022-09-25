@@ -14,16 +14,6 @@ public class PedidoDTO {
     
     @JsonIgnore
     private Integer numeroVehiculo;
-    
-    
-    /**
-
-    public PedidoDTO(Long id, Integer numero, boolean entregado) {
-        super();
-        this.id = id;
-        this.numero = numero;
-        this.entregado = entregado;
-    }*/
 
     public PedidoDTO(Pedido p) {
         super();
@@ -34,7 +24,6 @@ public class PedidoDTO {
 
     public PedidoDTO() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**

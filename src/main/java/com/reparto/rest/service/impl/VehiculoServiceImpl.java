@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.reparto.rest.entity.HcoUbicacionVehiculo;
 import com.reparto.rest.entity.Vehiculo;
 import com.reparto.rest.exception.BadRequestException;
+import com.reparto.rest.model.HcoUbicacionVehiculoDTO;
 import com.reparto.rest.model.PedidoDTO;
 import com.reparto.rest.model.VehiculoDTO;
 import com.reparto.rest.model.VehiculoNuevo;
 import com.reparto.rest.model.VehiculoUbicacion;
+import com.reparto.rest.repository.HcoUbicacionVehiculoRepository;
 import com.reparto.rest.repository.VehiculoRepository;
 import com.reparto.rest.service.VehiculoService;
 
@@ -23,6 +26,9 @@ public class VehiculoServiceImpl implements VehiculoService{
 
     @Autowired
     private VehiculoRepository vehiculoRepository;
+    
+    @Autowired
+    private HcoUbicacionVehiculoRepository hcoUbicacionVehiculoRepository;
     
     @Override
     public List<VehiculoDTO> findAll(){
@@ -81,7 +87,7 @@ public class VehiculoServiceImpl implements VehiculoService{
     }
     
     @Override
-    public VehiculoUbicacion insertarUbicacion(VehiculoUbicacion datosActualizar) {
+    public VehiculoUbicacion actualizarUbicacion(VehiculoUbicacion datosActualizar) {
         
         VehiculoUbicacion result = new VehiculoUbicacion();
         
@@ -92,7 +98,16 @@ public class VehiculoServiceImpl implements VehiculoService{
             throw new BadRequestException("El vehículo para el cual intenta actualizar la ubicación no existe");
         }
         
+      //Guardar el HCO
+        HcoUbicacionVehiculo hcoUbicacionVehiculo = new HcoUbicacionVehiculo();
+        hcoUbicacionVehiculo.setLatitud(vehiculo.getLatitud());
+        hcoUbicacionVehiculo.setLongitud(vehiculo.getLongitud());
+        hcoUbicacionVehiculo.setVehiculo(vehiculo);
+        
+        hcoUbicacionVehiculoRepository.save(hcoUbicacionVehiculo);
+        
         VehiculoDTO vehiculoActualizado = new VehiculoDTO(vehiculo);
+        
         
         //Actulizamos sus datos
         if(Objects.nonNull(datosActualizar.getLatitud()) && Objects.nonNull(datosActualizar.getLongitud())) {
@@ -112,6 +127,24 @@ public class VehiculoServiceImpl implements VehiculoService{
         }
         
         return result;
+        
+    }
+    
+    @Override
+    public List<HcoUbicacionVehiculoDTO> obtenerHistorialUbicacion(Integer numeroVehiculo){
+        
+        List<HcoUbicacionVehiculoDTO> resultado = new ArrayList<HcoUbicacionVehiculoDTO>(0);
+        
+        List<HcoUbicacionVehiculo> listadoUbicaciones = hcoUbicacionVehiculoRepository.obtenerHCOUbicaciones(numeroVehiculo);
+        
+        if(CollectionUtils.isEmpty(listadoUbicaciones)) {
+            throw new BadRequestException("No existe histórico de ubicaciones para este número de vehículo");
+        }
+        
+        resultado.addAll(listadoUbicaciones.stream().map(HcoUbicacionVehiculoDTO::new).collect(Collectors.toList()));
+        
+        return resultado;
+        
         
     }
     

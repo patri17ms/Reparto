@@ -3,6 +3,7 @@ package com.reparto.rest.service;
 import java.util.List;
 
 import com.reparto.rest.entity.Vehiculo;
+import com.reparto.rest.model.HcoUbicacionVehiculoDTO;
 import com.reparto.rest.model.VehiculoDTO;
 import com.reparto.rest.model.VehiculoNuevo;
 import com.reparto.rest.model.VehiculoUbicacion;
@@ -15,5 +16,7 @@ public interface VehiculoService {
     
     public VehiculoDTO insertarVehiculo(VehiculoNuevo vehiculoNuevo);
     
-    public VehiculoUbicacion insertarUbicacion(VehiculoUbicacion datosActualizar);
+    public VehiculoUbicacion actualizarUbicacion(VehiculoUbicacion datosActualizar);
+    
+    public List<HcoUbicacionVehiculoDTO> obtenerHistorialUbicacion(Integer numeroVehiculo);
 }
