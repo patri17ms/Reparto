@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.reparto.rest.model.VehiculoDTO;
+
 @Entity
 @Table(name = "vehiculo")
 public class Vehiculo {
@@ -35,6 +37,18 @@ public class Vehiculo {
     
     @OneToMany(mappedBy = "vehiculo", fetch = LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private Set<HcoUbicacionVehiculo> hcoUbicaciones;
+
+    public Vehiculo(VehiculoDTO vehiculoActualizado) {
+       this.id = vehiculoActualizado.getId().longValue();
+       this.numero = vehiculoActualizado.getNumero();
+       this.longitud = vehiculoActualizado.getLongitud();
+       this.latitud = vehiculoActualizado.getLatitud();
+       
+    }
+    
+    public Vehiculo() {
+        
+    }
 
     /**
      * @return the id

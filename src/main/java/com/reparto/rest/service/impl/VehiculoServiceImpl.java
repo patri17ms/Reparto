@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.reparto.rest.entity.Vehiculo;
+import com.reparto.rest.exception.BadRequestException;
 import com.reparto.rest.model.PedidoDTO;
 import com.reparto.rest.model.VehiculoDTO;
 import com.reparto.rest.model.VehiculoNuevo;
+import com.reparto.rest.model.VehiculoUbicacion;
 import com.reparto.rest.repository.VehiculoRepository;
 import com.reparto.rest.service.VehiculoService;
 
@@ -43,6 +45,10 @@ public class VehiculoServiceImpl implements VehiculoService{
         
         Vehiculo vehiculo = vehiculoRepository.findByNumero(numeroVehiculo);
         
+        if(Objects.isNull(vehiculo)) {
+            throw new BadRequestException("El vehículo que está buscando no existe.");
+        }
+        
         if(Objects.nonNull(vehiculo)) {
             
             List<PedidoDTO> pedidosDTO = new ArrayList<PedidoDTO>();
@@ -67,11 +73,46 @@ public class VehiculoServiceImpl implements VehiculoService{
         
         Vehiculo resultSave = vehiculoRepository.save(entityVehiculo);
         
-        if(Objects.nonNull(result)) {
+        if(Objects.nonNull(resultSave)) {
             result = new VehiculoDTO(resultSave);
         }
         
         return result;
+    }
+    
+    @Override
+    public VehiculoUbicacion insertarUbicacion(VehiculoUbicacion datosActualizar) {
+        
+        VehiculoUbicacion result = new VehiculoUbicacion();
+        
+        //Buscar vehiculo para ver si existe
+        Vehiculo vehiculo = vehiculoRepository.findByNumero(datosActualizar.getNumeroVehiculo());
+        
+        if(Objects.isNull(vehiculo)) {
+            throw new BadRequestException("El vehículo para el cual intenta actualizar la ubicación no existe");
+        }
+        
+        VehiculoDTO vehiculoActualizado = new VehiculoDTO(vehiculo);
+        
+        //Actulizamos sus datos
+        if(Objects.nonNull(datosActualizar.getLatitud()) && Objects.nonNull(datosActualizar.getLongitud())) {
+            vehiculoActualizado.setLongitud(datosActualizar.getLongitud());
+            vehiculoActualizado.setLatitud(datosActualizar.getLatitud());
+        }else {
+            throw new BadRequestException("Los datos de longitud y latitud no pueden ser vacíos.");
+        }
+        
+        Vehiculo vehiculoSave = new Vehiculo(vehiculoActualizado);
+        
+        //Guardamos datos actualizados
+        Vehiculo resultSave = vehiculoRepository.save(vehiculoSave);
+        
+        if(Objects.nonNull(resultSave)) {
+            result = new VehiculoUbicacion(resultSave);
+        }
+        
+        return result;
+        
     }
     
     

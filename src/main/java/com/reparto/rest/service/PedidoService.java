@@ -9,4 +9,7 @@ public interface PedidoService {
     public PedidoInformacion obtenerPosicionPedido(Integer numeroPedido);
     
     public PedidoDTO insertarPedido(PedidoNuevo pedidoNuevo);
+    
+    public void eliminarPedido(Integer numeroPedido);
+
 }

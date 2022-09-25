@@ -1,8 +1,11 @@
 package com.reparto.rest.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +35,15 @@ public class PedidoController {
     
     
     @PostMapping("/insertarPedido")
-    public ResponseEntity<PedidoDTO> updateParam(@RequestBody PedidoNuevo pedidoNuevo) {
+    public ResponseEntity<PedidoDTO> insertarPedido(@RequestBody PedidoNuevo pedidoNuevo) {
         return ResponseEntity.ok(pedidoService.insertarPedido(pedidoNuevo));
     }
+    
+    @DeleteMapping("/eliminarPedido")
+    public ResponseEntity<Void> eliminarPedido(@RequestParam Integer numeroPedido) {
+        pedidoService.eliminarPedido(numeroPedido);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
 
 }
