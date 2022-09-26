@@ -29,26 +29,59 @@ public class VehiculoController {
     private VehiculoService vehiculoService;
     
     
+    /**
+     * Recupera el listado de todos los vehículos existentes en base de datos
+     * GET Mapping
+     *
+     * @return Devuelve un listado de vehículos
+     */
     @GetMapping("/listadoVehiculos")
     public ResponseEntity<List<VehiculoDTO>> findAll(){
         return new ResponseEntity<>(vehiculoService.findAll(), HttpStatus.OK);
     }
     
+    /**
+     * Obtiene la ubicación de un determinado vehículo utilizando el número de vehículo como parámetro de consulta
+     * GET Mapping.
+     *
+     * @param numeroVehiculo the numero vehiculo
+     * @return Devuelve la información de un vehículo o un error avisando de que el vehículo no existe
+     */
     @GetMapping("/buscarVehiculo")
     public ResponseEntity<VehiculoDTO> obtenerUbicacion(@RequestParam(value = "numeroVehiculo") Integer numeroVehiculo){
         return new ResponseEntity<>(vehiculoService.obtenerUbicacion(numeroVehiculo), HttpStatus.OK);
     }
     
+    /**
+     * Insertar un nuevo vehículo.
+     * POST Mapping
+     *
+     * @param vehiculoNuevo the vehiculo nuevo
+     * @return Devuelve el nuevo vehículo
+     */
     @PostMapping("/insertarVehiculo")
     public ResponseEntity<VehiculoDTO> insertarVehiculo(@RequestBody VehiculoNuevo vehiculoNuevo) {
         return ResponseEntity.ok(vehiculoService.insertarVehiculo(vehiculoNuevo));
     }
     
+    /**
+     * Actualiza la ubicación de un vehículo ya existente
+     * PUT Mapping
+     *
+     * @param vehiculoUbicacion the vehiculo ubicacion
+     * @return Devuelve el vehículo actualizado o un error avisando de que no se puede actualizar y el motivo.
+     */
     @PutMapping("/actualizarUbicacion")
     public ResponseEntity<VehiculoUbicacion> actualizarUbicacion(@RequestBody @Valid VehiculoUbicacion vehiculoUbicacion) {
         return new ResponseEntity<>(vehiculoService.actualizarUbicacion(vehiculoUbicacion), HttpStatus.OK);
     }
     
+    /**
+     * Obtiene el historial de ubicacion utilizando como parámetro de consulta el número de vehículo.
+     *
+     * @param numeroVehiculo the numero vehiculo
+     * @return Devuelve un listado de ubicaciones o un error avisando de que no hay ubicaciones para ese vehículo.
+     */
     @GetMapping("/obtenerHistorialUbicacion")
     public ResponseEntity<List<HcoUbicacionVehiculoDTO>> obtenerHistorialUbicacion(@RequestParam(value = "numeroVehiculo") Integer numeroVehiculo){
         return new ResponseEntity<>(vehiculoService.obtenerHistorialUbicacion(numeroVehiculo), HttpStatus.OK);

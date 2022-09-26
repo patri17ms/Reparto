@@ -29,25 +29,24 @@ public class PedidoServiceImpl implements PedidoService{
 
     @Override
     public PedidoInformacion obtenerPosicionPedido(Integer numeroPedido){
-        
         PedidoInformacion resultado = new PedidoInformacion();
         
         Pedido pedidoResultado = pedidoRepository.findByNumero(numeroPedido);
         
-        if(Objects.nonNull(pedidoResultado)) {
-            PedidoDTO pedidoDTO = new PedidoDTO(pedidoResultado);
-            
-            VehiculoDTO vehiculoDTO = new VehiculoDTO(pedidoResultado.getVehiculo());
-            
-            if(Objects.nonNull(pedidoDTO) && Objects.nonNull(vehiculoDTO)) {
-                resultado.setNumeroPedido(pedidoDTO.getNumero());
-                resultado.setNumeroVehiculo(vehiculoDTO.getNumero());
-                resultado.setLongitud(vehiculoDTO.getLongitud());
-                resultado.setLatitud(vehiculoDTO.getLatitud());
-            }
+        if(Objects.isNull(pedidoResultado)) {
+            throw new BadRequestException("El número de pedido para el cual intenta obtener la posición no existe");
         }
-       
         
+        PedidoDTO pedidoDTO = new PedidoDTO(pedidoResultado);
+            
+        VehiculoDTO vehiculoDTO = new VehiculoDTO(pedidoResultado.getVehiculo());
+            
+        if(Objects.nonNull(pedidoDTO) && Objects.nonNull(vehiculoDTO)) {
+            resultado.setNumeroPedido(pedidoDTO.getNumero());
+            resultado.setNumeroVehiculo(vehiculoDTO.getNumero());
+            resultado.setLongitud(vehiculoDTO.getLongitud());
+            resultado.setLatitud(vehiculoDTO.getLatitud());
+        }
         
         return resultado;
     }
@@ -89,11 +88,10 @@ public class PedidoServiceImpl implements PedidoService{
     
     
     public void eliminarPedido(Integer numeroPedido) {
-        //Buscar numeroPedido a ver si existe
-        
+        //Buscar numeroPedido a ver si existe        
         Pedido pedido = pedidoRepository.findByNumero(numeroPedido);
         if(Objects.isNull(pedido)) {
-            throw new BadRequestException("El pedido no existe");
+            throw new BadRequestException("El pedido que intenta eliminar no existe");
         }
         
         pedidoRepository.delete(pedido);

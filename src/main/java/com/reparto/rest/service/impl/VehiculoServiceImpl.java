@@ -71,6 +71,12 @@ public class VehiculoServiceImpl implements VehiculoService{
     @Override
     public VehiculoDTO insertarVehiculo(VehiculoNuevo vehiculoNuevo) {
         
+        //Comprobar si existe ese número de vehículo
+        Vehiculo vehiculoBBDD = vehiculoRepository.findByNumero(vehiculoNuevo.getNumeroVehiculo());
+        if(!Objects.isNull(vehiculoBBDD)) {
+            throw new BadRequestException("El vehículo que está intentando crear ya existe.");
+        }
+        
         VehiculoDTO result = new VehiculoDTO();
         Vehiculo entityVehiculo = new Vehiculo();
         entityVehiculo.setNumero(vehiculoNuevo.getNumeroVehiculo());
@@ -95,7 +101,7 @@ public class VehiculoServiceImpl implements VehiculoService{
         Vehiculo vehiculo = vehiculoRepository.findByNumero(datosActualizar.getNumeroVehiculo());
         
         if(Objects.isNull(vehiculo)) {
-            throw new BadRequestException("El vehículo para el cual intenta actualizar la ubicación no existe");
+            throw new BadRequestException("El vehículo para el cual intenta actualizar la ubicación no existe.");
         }
         
       //Guardar el HCO
