@@ -5,9 +5,14 @@ import com.reparto.rest.entity.HcoUbicacionVehiculo;
 
 public class HcoUbicacionVehiculoDTO {
 
+    /** The id. */
     @JsonIgnore
     private Long id;
+    
+    /** The latitud. */
     private Double latitud;
+    
+    /** The longitud. */
     private Double longitud;
     
     

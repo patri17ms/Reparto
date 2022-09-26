@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -30,8 +28,6 @@ import com.reparto.rest.service.VehiculoService;
 @Service
 public class VehiculoServiceImpl implements VehiculoService{
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(VehiculoServiceImpl.class.getName());
-
 
     @Autowired
     private VehiculoRepository vehiculoRepository;
@@ -184,6 +180,12 @@ public class VehiculoServiceImpl implements VehiculoService{
     }
     
     
+    /**
+     * Convierte una fecha que viene como string a java.sql.Date
+     *
+     * @param dateString the date string
+     * @return the date
+     */
     private Date convertToSqlDate(String dateString) {
 
         java.sql.Date date = null;

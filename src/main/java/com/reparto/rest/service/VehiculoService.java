@@ -1,9 +1,7 @@
 package com.reparto.rest.service;
 
-import java.sql.Date;
 import java.util.List;
 
-import com.reparto.rest.entity.Vehiculo;
 import com.reparto.rest.model.HcoUbicacionVehiculoDTO;
 import com.reparto.rest.model.VehiculoDTO;
 import com.reparto.rest.model.VehiculoNuevo;

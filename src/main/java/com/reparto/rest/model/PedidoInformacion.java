@@ -1,11 +1,23 @@
 package com.reparto.rest.model;
 
 public class PedidoInformacion {
+    
+    /** The numero pedido. */
     public Integer numeroPedido;
+    
+    /** The numero vehiculo. */
     public Integer numeroVehiculo;
+    
+    /** The longitud. */
     public Double longitud;
+    
+    /** The latitud. */
     public Double latitud;
+    
+    /** The direccion entrega. */
     public String direccionEntrega;
+    
+    /** The destinatario. */
     private String destinatario;
     
     /**

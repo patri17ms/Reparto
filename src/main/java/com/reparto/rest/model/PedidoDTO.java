@@ -5,16 +5,21 @@ import com.reparto.rest.entity.Pedido;
 
 public class PedidoDTO {
 
+    /** The id. */
     @JsonIgnore
     private Long id;
     
+    /** The numero. */
     private Integer numero;
     
+    /** The numero vehiculo. */
     @JsonIgnore
     private Integer numeroVehiculo;
     
+    /** The direccion entrega. */
     private String direccionEntrega;
     
+    /** The destinatario. */
     private String destinatario;
 
     public PedidoDTO(Pedido p) {

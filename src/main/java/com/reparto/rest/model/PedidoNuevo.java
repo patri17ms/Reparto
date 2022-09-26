@@ -1,9 +1,17 @@
 package com.reparto.rest.model;
 
 public class PedidoNuevo {
+    
+    /** The numero pedido. */
     private Integer numeroPedido;
+    
+    /** The numero vehiculo. */
     private Integer numeroVehiculo;
+    
+    /** The direccion entrega. */
     private String direccionEntrega;
+    
+    /** The destinatario. */
     private String destinatario;
     /**
      * @return the numeroPedido
