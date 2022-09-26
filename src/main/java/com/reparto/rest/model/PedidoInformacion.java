@@ -5,6 +5,9 @@ public class PedidoInformacion {
     public Integer numeroVehiculo;
     public Double longitud;
     public Double latitud;
+    public String direccionEntrega;
+    private String destinatario;
+    
     /**
      * @return the numeroPedido
      */
@@ -53,6 +56,29 @@ public class PedidoInformacion {
     public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
-    
+    /**
+     * @return the direccionEntrega
+     */
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+    /**
+     * @param direccionEntrega the direccionEntrega to set
+     */
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+    /**
+     * @return the destinatario
+     */
+    public String getDestinatario() {
+        return destinatario;
+    }
+    /**
+     * @param destinatario the destinatario to set
+     */
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
+    }
     
 }

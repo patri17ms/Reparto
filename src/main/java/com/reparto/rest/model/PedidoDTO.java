@@ -10,16 +10,19 @@ public class PedidoDTO {
     
     private Integer numero;
     
-    private boolean entregado;
-    
     @JsonIgnore
     private Integer numeroVehiculo;
+    
+    private String direccionEntrega;
+    
+    private String destinatario;
 
     public PedidoDTO(Pedido p) {
         super();
         this.id = p.getId();
         this.numero = p.getNumero();
-        this.entregado = p.isEntregado();
+        this.direccionEntrega = p.getDireccionEntrega();
+        this.destinatario= p.getDestinatario();
     }
 
     public PedidoDTO() {
@@ -55,20 +58,6 @@ public class PedidoDTO {
     }
 
     /**
-     * @return the entregado
-     */
-    public boolean isEntregado() {
-        return entregado;
-    }
-
-    /**
-     * @param entregado the entregado to set
-     */
-    public void setEntregado(boolean entregado) {
-        this.entregado = entregado;
-    }
-
-    /**
      * @return the numeroVehiculo
      */
     public Integer getNumeroVehiculo() {
@@ -82,8 +71,33 @@ public class PedidoDTO {
         this.numeroVehiculo = numeroVehiculo;
     }
 
-    
+    /**
+     * @return the direccionEntrega
+     */
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
 
-    
+    /**
+     * @param direccionEntrega the direccionEntrega to set
+     */
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    /**
+     * @return the destinatario
+     */
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    /**
+     * @param destinatario the destinatario to set
+     */
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
+    }
+
     
 }

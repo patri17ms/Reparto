@@ -83,8 +83,10 @@ public class VehiculoController {
      * @return Devuelve un listado de ubicaciones o un error avisando de que no hay ubicaciones para ese vehículo.
      */
     @GetMapping("/obtenerHistorialUbicacion")
-    public ResponseEntity<List<HcoUbicacionVehiculoDTO>> obtenerHistorialUbicacion(@RequestParam(value = "numeroVehiculo") Integer numeroVehiculo){
-        return new ResponseEntity<>(vehiculoService.obtenerHistorialUbicacion(numeroVehiculo), HttpStatus.OK);
+    public ResponseEntity<List<HcoUbicacionVehiculoDTO>> obtenerHistorialUbicacion(
+            @RequestParam(value = "numeroVehiculo") Integer numeroVehiculo,
+            @RequestParam(value = "fecha", required = false) String fecha) {
+        return new ResponseEntity<>(vehiculoService.obtenerHistorialUbicacion(numeroVehiculo, fecha), HttpStatus.OK);
     }
 }
 

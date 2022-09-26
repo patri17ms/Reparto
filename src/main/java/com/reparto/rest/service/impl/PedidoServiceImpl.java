@@ -1,7 +1,5 @@
 package com.reparto.rest.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +44,8 @@ public class PedidoServiceImpl implements PedidoService{
             resultado.setNumeroVehiculo(vehiculoDTO.getNumero());
             resultado.setLongitud(vehiculoDTO.getLongitud());
             resultado.setLatitud(vehiculoDTO.getLatitud());
+            resultado.setDestinatario(pedidoDTO.getDestinatario());
+            resultado.setDireccionEntrega(pedidoDTO.getDireccionEntrega());
         }
         
         return resultado;
@@ -55,18 +55,27 @@ public class PedidoServiceImpl implements PedidoService{
     @Override
     public PedidoDTO insertarPedido(PedidoNuevo pedidoNuevo) {
         
+        if (Objects.isNull(pedidoNuevo.getNumeroPedido())
+                ||Objects.isNull(pedidoNuevo.getDestinatario()) 
+                || Objects.isNull(pedidoNuevo.getDireccionEntrega())
+                || Objects.isNull(pedidoNuevo.getNumeroVehiculo())) {
+
+            throw new BadRequestException("Faltan campos por rellenar.");
+        }
+        
         //Buscar si ya existe ese pedido
         Pedido pedidoBBDD = pedidoRepository.findByNumero(pedidoNuevo.getNumeroPedido());
         
-        if(!Objects.isNull(pedidoBBDD)) {
+        if (!Objects.isNull(pedidoBBDD)) {
             throw new BadRequestException("El número de pedido que está intentando insertar ya existe");
-        }
+        } 
         
         PedidoDTO result = new PedidoDTO();
         
         Pedido entityPedido = new Pedido();
-        entityPedido.setEntregado(false);
         entityPedido.setNumero(pedidoNuevo.getNumeroPedido());
+        entityPedido.setDireccionEntrega(pedidoNuevo.getDireccionEntrega());
+        entityPedido.setDestinatario(pedidoNuevo.getDestinatario());
        
         
         Vehiculo vehiculo = vehiculoRepository.findByNumero(pedidoNuevo.getNumeroVehiculo());

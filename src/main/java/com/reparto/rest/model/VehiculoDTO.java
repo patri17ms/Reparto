@@ -1,5 +1,6 @@
 package com.reparto.rest.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,8 @@ public class VehiculoDTO {
     
     private List<PedidoDTO> pedidos;
     
+    @JsonIgnore
+    private Date fecha;
     
     
 
@@ -112,13 +115,23 @@ public class VehiculoDTO {
     }
     
     
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
     public List<PedidoDTO> addPedidosDTO(Set<Pedido> pedidos) {
         
-        //List<Pedido> pedidosEntity = new ArrayList<Pedido>(pedidos);
-            
         List<PedidoDTO> resultado = new ArrayList<PedidoDTO>();
-        
-        
         
         if(!CollectionUtils.isEmpty(pedidos)) {
             resultado.addAll(pedidos.stream().map(PedidoDTO::new).collect(Collectors.toList()));
@@ -126,6 +139,8 @@ public class VehiculoDTO {
         
         return resultado;
     }
+    
+    
     
     
 }

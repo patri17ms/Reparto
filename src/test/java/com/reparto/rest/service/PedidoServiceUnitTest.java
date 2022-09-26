@@ -100,7 +100,8 @@ public class PedidoServiceUnitTest {
         Pedido pedido = new Pedido();
         pedido.setNumero(1);
         pedido.setId(1L);
-        pedido.setEntregado(false);
+        pedido.setDestinatario("Dest Prueba");
+        pedido.setDireccionEntrega("Dir prueba");
         
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setId(1L);
@@ -115,6 +116,8 @@ public class PedidoServiceUnitTest {
         PedidoNuevo pedidoNuevo = new PedidoNuevo();
         pedidoNuevo.setNumeroPedido(2);
         pedidoNuevo.setNumeroVehiculo(3);
+        pedidoNuevo.setDestinatario("Dest Prueba");
+        pedidoNuevo.setDireccionEntrega("Dir prueba");
         return pedidoNuevo;
     }
     

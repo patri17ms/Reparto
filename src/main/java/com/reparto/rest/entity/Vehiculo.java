@@ -2,6 +2,7 @@ package com.reparto.rest.entity;
 
 import static javax.persistence.FetchType.LAZY;
 
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -37,13 +38,16 @@ public class Vehiculo {
     
     @OneToMany(mappedBy = "vehiculo", fetch = LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private Set<HcoUbicacionVehiculo> hcoUbicaciones;
+    
+    @Column(name = "fecha")
+    private Date fecha;
 
-    public Vehiculo(VehiculoDTO vehiculoActualizado) {
-       this.id = vehiculoActualizado.getId().longValue();
-       this.numero = vehiculoActualizado.getNumero();
-       this.longitud = vehiculoActualizado.getLongitud();
-       this.latitud = vehiculoActualizado.getLatitud();
-       
+    public Vehiculo(VehiculoDTO v) {
+       this.id = v.getId().longValue();
+       this.numero = v.getNumero();
+       this.longitud = v.getLongitud();
+       this.latitud = v.getLatitud();
+       this.fecha = v.getFecha();
     }
     
     public Vehiculo() {
@@ -132,6 +136,20 @@ public class Vehiculo {
      */
     public void setHcoUbicaciones(Set<HcoUbicacionVehiculo> hcoUbicaciones) {
         this.hcoUbicaciones = hcoUbicaciones;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
     
     

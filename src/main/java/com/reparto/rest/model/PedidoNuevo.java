@@ -1,21 +1,10 @@
 package com.reparto.rest.model;
 
 public class PedidoNuevo {
-    private boolean entregado;
     private Integer numeroPedido;
     private Integer numeroVehiculo;
-    /**
-     * @return the entregado
-     */
-    public boolean isEntregado() {
-        return entregado;
-    }
-    /**
-     * @param entregado the entregado to set
-     */
-    public void setEntregado(boolean entregado) {
-        this.entregado = entregado;
-    }
+    private String direccionEntrega;
+    private String destinatario;
     /**
      * @return the numeroPedido
      */
@@ -40,7 +29,29 @@ public class PedidoNuevo {
     public void setNumeroVehiculo(Integer numeroVehiculo) {
         this.numeroVehiculo = numeroVehiculo;
     }
+    /**
+     * @return the direccionEntrega
+     */
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+    /**
+     * @param direccionEntrega the direccionEntrega to set
+     */
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+    /**
+     * @return the destinatario
+     */
+    public String getDestinatario() {
+        return destinatario;
+    }
+    /**
+     * @param destinatario the destinatario to set
+     */
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
+    }
     
-    
-
 }

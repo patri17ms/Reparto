@@ -1,5 +1,8 @@
 package com.reparto.rest.model;
 
+import java.sql.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reparto.rest.entity.Vehiculo;
 
 public class VehiculoUbicacion {
@@ -7,7 +10,8 @@ public class VehiculoUbicacion {
     private Integer numeroVehiculo;
     private Double latitud;
     private Double longitud;
-    
+    @JsonIgnore
+    private Date fecha;
     
     
     public VehiculoUbicacion(Vehiculo v) {
@@ -15,6 +19,7 @@ public class VehiculoUbicacion {
         this.numeroVehiculo = v.getNumero();
         this.latitud = v.getLatitud();
         this.longitud = v.getLongitud();
+        this.fecha = v.getFecha();
     }
     public VehiculoUbicacion() {
         
@@ -54,6 +59,18 @@ public class VehiculoUbicacion {
      */
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
  
     

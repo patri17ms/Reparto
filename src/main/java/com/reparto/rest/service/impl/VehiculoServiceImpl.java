@@ -1,10 +1,16 @@
 package com.reparto.rest.service.impl;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -23,6 +29,9 @@ import com.reparto.rest.service.VehiculoService;
 
 @Service
 public class VehiculoServiceImpl implements VehiculoService{
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(VehiculoServiceImpl.class.getName());
+
 
     @Autowired
     private VehiculoRepository vehiculoRepository;
@@ -77,11 +86,15 @@ public class VehiculoServiceImpl implements VehiculoService{
             throw new BadRequestException("El vehículo que está intentando crear ya existe.");
         }
         
+        LocalDate date = LocalDate.now();
+        Date fecha = java.sql.Date.valueOf(date);
+        
         VehiculoDTO result = new VehiculoDTO();
         Vehiculo entityVehiculo = new Vehiculo();
         entityVehiculo.setNumero(vehiculoNuevo.getNumeroVehiculo());
         entityVehiculo.setLongitud(vehiculoNuevo.getLongitud());
         entityVehiculo.setLatitud(vehiculoNuevo.getLatitud());
+        entityVehiculo.setFecha(fecha);
         
         Vehiculo resultSave = vehiculoRepository.save(entityVehiculo);
         
@@ -109,6 +122,7 @@ public class VehiculoServiceImpl implements VehiculoService{
         hcoUbicacionVehiculo.setLatitud(vehiculo.getLatitud());
         hcoUbicacionVehiculo.setLongitud(vehiculo.getLongitud());
         hcoUbicacionVehiculo.setVehiculo(vehiculo);
+        hcoUbicacionVehiculo.setFecha(vehiculo.getFecha());
         
         hcoUbicacionVehiculoRepository.save(hcoUbicacionVehiculo);
         
@@ -117,8 +131,11 @@ public class VehiculoServiceImpl implements VehiculoService{
         
         //Actulizamos sus datos
         if(Objects.nonNull(datosActualizar.getLatitud()) && Objects.nonNull(datosActualizar.getLongitud())) {
+            LocalDate date = LocalDate.now();
+            Date fecha = java.sql.Date.valueOf(date);
             vehiculoActualizado.setLongitud(datosActualizar.getLongitud());
             vehiculoActualizado.setLatitud(datosActualizar.getLatitud());
+            vehiculoActualizado.setFecha(fecha);
         }else {
             throw new BadRequestException("Los datos de longitud y latitud no pueden ser vacíos.");
         }
@@ -137,14 +154,26 @@ public class VehiculoServiceImpl implements VehiculoService{
     }
     
     @Override
-    public List<HcoUbicacionVehiculoDTO> obtenerHistorialUbicacion(Integer numeroVehiculo){
+    public List<HcoUbicacionVehiculoDTO> obtenerHistorialUbicacion(Integer numeroVehiculo, String fechaString){
         
         List<HcoUbicacionVehiculoDTO> resultado = new ArrayList<HcoUbicacionVehiculoDTO>(0);
         
-        List<HcoUbicacionVehiculo> listadoUbicaciones = hcoUbicacionVehiculoRepository.obtenerHCOUbicaciones(numeroVehiculo);
+        List<HcoUbicacionVehiculo> listadoUbicaciones = new ArrayList<HcoUbicacionVehiculo>(0);
+        
+        String textoError = "";
+        
+        if(Objects.isNull(fechaString)) {
+            listadoUbicaciones.addAll(hcoUbicacionVehiculoRepository.obtenerHCOUbicacionesVehiculo(numeroVehiculo));
+        }else {       
+            
+            Date fecha = convertToSqlDate(fechaString);      
+            listadoUbicaciones.addAll(hcoUbicacionVehiculoRepository.obtenerHCOUbicacionesPorFechayVehiculo(numeroVehiculo, fecha));
+            textoError = textoError +" en esta fecha";
+   
+        }
         
         if(CollectionUtils.isEmpty(listadoUbicaciones)) {
-            throw new BadRequestException("No existe histórico de ubicaciones para este número de vehículo");
+            throw new BadRequestException("No existe histórico de ubicaciones para este número de vehículo"+textoError);
         }
         
         resultado.addAll(listadoUbicaciones.stream().map(HcoUbicacionVehiculoDTO::new).collect(Collectors.toList()));
@@ -152,6 +181,20 @@ public class VehiculoServiceImpl implements VehiculoService{
         return resultado;
         
         
+    }
+    
+    
+    private Date convertToSqlDate(String dateString) {
+
+        java.sql.Date date = null;
+        try {
+            date = Objects.isNull(dateString) ? null
+                    : new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(dateString).getTime());
+        } catch (ParseException e) {
+
+        }
+
+        return date;
     }
     
     

@@ -20,8 +20,11 @@ public class Pedido {
     @Column(name="numero")
     private Integer numero;
     
-    @Column(name="entregado")
-    private boolean entregado;
+    @Column(name="direccion_entrega")
+    private String direccionEntrega;
+    
+    @Column(name="destinatario")
+    private String destinatario;
     
     @ManyToOne
     @JoinColumn(name = "vehiculo")
@@ -56,20 +59,6 @@ public class Pedido {
     }
 
     /**
-     * @return the entregado
-     */
-    public boolean isEntregado() {
-        return entregado;
-    }
-
-    /**
-     * @param entregado the entregado to set
-     */
-    public void setEntregado(boolean entregado) {
-        this.entregado = entregado;
-    }
-
-    /**
      * @return the vehiculo
      */
     public Vehiculo getVehiculo() {
@@ -81,6 +70,34 @@ public class Pedido {
      */
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
+    }
+
+    /**
+     * @return the direccionEntrega
+     */
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    /**
+     * @param direccionEntrega the direccionEntrega to set
+     */
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    /**
+     * @return the destinatario
+     */
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    /**
+     * @param destinatario the destinatario to set
+     */
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
     }
     
     

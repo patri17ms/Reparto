@@ -116,18 +116,18 @@ public class VehiculoServiceUnitTest {
     @Test
     public void obtenerHistorialUbicacion_BadRequest() {
         try {
-            vehiculoService.obtenerHistorialUbicacion(Mockito.anyInt());
+            vehiculoService.obtenerHistorialUbicacion(Mockito.anyInt(), Mockito.anyString());
         }catch (BadRequestException e) {
-            assertEquals(e.getReason(), "No existe histórico de ubicaciones para este número de vehículo");
+            assertEquals(e.getReason(), "No existe histórico de ubicaciones para este número de vehículo en esta fecha");
         }
     }
     
     @Test
     public void obtenerHistorialUbicacion_OK() {
         Mockito.when(hcoUbicacionVehiculoRepository
-                .obtenerHCOUbicaciones(Mockito.anyInt())).thenReturn(getListadoHcoUbicacionVehiculo());
+                .obtenerHCOUbicacionesVehiculo(Mockito.anyInt())).thenReturn(getListadoHcoUbicacionVehiculo());
         
-        List<HcoUbicacionVehiculoDTO> resultado = vehiculoService.obtenerHistorialUbicacion(Mockito.anyInt());
+        List<HcoUbicacionVehiculoDTO> resultado = vehiculoService.obtenerHistorialUbicacion(Mockito.anyInt(),null);
         assertNotNull(resultado.get(0));
     }
     

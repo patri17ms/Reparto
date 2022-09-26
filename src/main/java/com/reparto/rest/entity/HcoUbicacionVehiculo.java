@@ -1,5 +1,7 @@
 package com.reparto.rest.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,9 @@ public class HcoUbicacionVehiculo {
     @ManyToOne
     @JoinColumn(name = "vehiculo")
     private Vehiculo vehiculo;
+    
+    @Column(name = "fecha")
+    private Date fecha;
 
     /**
      * @return the id
@@ -83,7 +88,20 @@ public class HcoUbicacionVehiculo {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-    
-    
 
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
+    
 }

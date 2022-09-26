@@ -1,5 +1,6 @@
 package com.reparto.rest.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.reparto.rest.entity.Vehiculo;
@@ -47,5 +48,5 @@ public interface VehiculoService {
      * @param numeroVehiculo the numero vehiculo
      * @return the list
      */
-    public List<HcoUbicacionVehiculoDTO> obtenerHistorialUbicacion(Integer numeroVehiculo);
+    public List<HcoUbicacionVehiculoDTO> obtenerHistorialUbicacion(Integer numeroVehiculo, String fecha);
 }
